@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fold</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111;
+    --soft: #555;
+    --faint: #999;
+    --accent: #9b5e3c;
+    --cream: #faf7f2;
+    --warm: #f0ebe3;
+    --line: #d6cfc4;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Newsreader',Georgia,serif;
+    background:var(--cream); color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  .hero {
+    min-height:100vh; display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+    text-align:center; padding:3rem 2rem; position:relative;
+  }
+  .hero-shape {
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%); width:220px; height:220px;
+  }
+  .hero-shape .ln {
+    position:absolute; top:50%; left:0;
+    width:100%; height:1px; background:var(--line);
+    transform-origin:center; animation:spin 20s linear infinite;
+  }
+  .hero-shape .ln:nth-child(2){animation-delay:-5s}
+  .hero-shape .ln:nth-child(3){animation-delay:-10s}
+  .hero-shape .ln:nth-child(4){animation-delay:-15s}
+  @keyframes spin {
+    0%{transform:rotate(0deg);opacity:.25}
+    50%{opacity:.5}
+    100%{transform:rotate(180deg);opacity:.25}
+  }
+  .hero h1 {
+    font-size:clamp(3.5rem,10vw,7rem); font-weight:500;
+    letter-spacing:-.03em; line-height:1; position:relative; z-index:1;
+  }
+  .hero > p {
+    font-size:1.1rem; color:var(--soft); margin-top:1.5rem;
+    max-width:420px; line-height:1.6; font-weight:300;
+    position:relative; z-index:1;
+  }
+  .darr {
+    position:absolute; bottom:2.5rem; font-size:1.5rem; color:var(--line);
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+  section { max-width:640px; margin:0 auto; padding:0 1.5rem; }
+  .sp { height:5rem; }
+  .sp-lg { height:6.5rem; }
+
+  .label {
+    font-family:'DM Sans',sans-serif; font-weight:600; font-size:.65rem;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+  }
+  h2 {
+    font-size:clamp(1.5rem,4vw,2.1rem); font-weight:500;
+    line-height:1.28; margin:.75rem 0 1.2rem; letter-spacing:-.01em;
+  }
+  h3 { font-size:1.1rem; font-weight:500; margin:2.2rem 0 .8rem; }
+  .b {
+    font-size:1.05rem; line-height:1.82; color:var(--ink); font-weight:300;
+  }
+  .b + .b { margin-top:1.15rem; }
+  .b strong { font-weight:500; }
+  .at {
+    font-size:1.25rem; font-style:italic; font-weight:300;
+    line-height:1.55; margin:2.5rem auto; text-align:center;
+    max-width:460px; color:var(--ink);
+  }
+
+  .dv { height:4.5rem; display:flex; align-items:center; justify-content:center; }
+  .dv span { display:block; width:40px; height:1px; background:var(--line); }
+
+  .vis { margin:2.5rem auto; text-align:center; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .vis svg { width:100%; max-width:640px; min-width:580px; display:block; margin:0 auto; }
+
+  .grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1px; background:var(--line); border:1px solid var(--line);
+    margin:2rem 0; border-radius:4px; overflow:hidden;
+  }
+  .gi { background:var(--cream); padding:1.2rem 1rem; }
+  .gi-l {
+    font-family:'DM Sans',sans-serif; font-weight:600; font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:.3rem;
+  }
+  .gi-t { font-size:.9rem; font-weight:300; color:var(--soft); line-height:1.55; }
+
+  .chain { display:flex; flex-direction:column; margin:2rem 0; }
+  .cs {
+    display:flex; align-items:flex-start; gap:1.2rem;
+    padding:1.3rem 0; border-bottom:1px solid var(--line);
+  }
+  .cs:last-child { border-bottom:none; }
+  .cn {
+    font-family:'DM Sans',sans-serif; font-size:.7rem; font-weight:600;
+    color:var(--accent); min-width:22px; padding-top:.15rem;
+  }
+  .cc h3 { font-size:1rem; font-weight:500; margin:0 0 .3rem; }
+  .cc p { font-size:.92rem; font-weight:300; color:var(--soft); line-height:1.6; }
+
+  .note {
+    background:var(--warm); border-radius:6px; padding:1.3rem 1.5rem;
+    margin:2rem 0; font-size:.92rem; font-weight:300;
+    color:var(--soft); line-height:1.7;
+  }
+
+  .band {
+    background:var(--ink); color:var(--cream); padding:4rem 2rem;
+    margin:4rem 0; text-align:center;
+    width:100vw; margin-left:calc(-50vw + 50%);
+  }
+  .band p {
+    max-width:520px; margin:0 auto; font-size:1.2rem;
+    font-weight:300; font-style:italic; line-height:1.7;
+  }
+  .band p + p { margin-top:1.2rem; }
+
+  .analogy {
+    border:1px solid var(--line); border-radius:6px;
+    padding:1.5rem; margin:2rem 0;
+  }
+  .analogy-label {
+    font-family:'DM Sans',sans-serif; font-weight:600; font-size:.6rem;
+    letter-spacing:.15em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:.7rem;
+  }
+  .analogy p {
+    font-size:.95rem; font-weight:300; color:var(--soft); line-height:1.65;
+  }
+  .analogy p + p { margin-top:.7rem; }
+
+  .dose {
+    border-left:3px solid var(--line); padding-left:1.3rem;
+    margin:1.5rem 0;
+  }
+  .dose-label {
+    font-family:'DM Sans',sans-serif; font-weight:600; font-size:.65rem;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:.4rem;
+  }
+  .dose p {
+    font-size:.95rem; font-weight:300; color:var(--soft); line-height:1.7;
+  }
+
+  .callout {
+    border:1px solid var(--line); border-radius:6px;
+    padding:1.5rem; margin:2.5rem 0;
+    background: linear-gradient(135deg, var(--warm) 0%, var(--cream) 100%);
+  }
+  .callout-label {
+    font-family:'DM Sans',sans-serif; font-weight:600; font-size:.6rem;
+    letter-spacing:.15em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:.7rem;
+  }
+  .callout p {
+    font-size:.92rem; font-weight:300; color:var(--soft); line-height:1.7;
+  }
+  .callout p + p { margin-top:.7rem; }
+
+  footer {
+    text-align:center; padding:3rem 2rem 4rem;
+    font-family:'DM Sans',sans-serif; font-size:.7rem;
+    color:var(--faint); letter-spacing:.1em;
+  }
+
+  .fi {
+    opacity:0; transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .fi.v { opacity:1; transform:translateY(0); }
+  .fi.no-anim { opacity:1; transform:none; transition:none; }
+
+  @media(max-width:600px){
+    .grid{grid-template-columns:1fr}
+    section{padding:0 1.2rem}
+    .hero h1{font-size:3.2rem}
+    .band{padding:3rem 1.5rem}
+    .band p{font-size:1.05rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ -->
+<!--                HERO                    -->
+<!-- ═══════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-shape">
+    <div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div>
+  </div>
+  <h1>The Fold</h1>
+  <p>What if reality works like&nbsp;origami?</p>
+  <span class="darr">&darr;</span>
+</header>
+
+<div class="sp-lg"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--         PART ONE: THE IDEA             -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part One</p>
+  <h2>Start with a piece of paper.</h2>
+
+  <p class="b">Take a flat sheet and fold it. Nothing is added. Nothing is removed. But the fold creates something that wasn't there before: a distinction. There's now a top and a bottom. A front and a back. A crease where there used to be nothing.</p>
+
+  <p class="b">Keep folding. With enough folds, that flat, unfolded square becomes an origami crane, a rose, a dragon with scales and claws, a box that can hold things. The original paper didn't change. It's still one flat sheet. But folded and creased, it becomes something else.</p>
+
+  <div class="vis">
+    <svg viewBox="0 0 640 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <style>
+          .dash-anim { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawLine 4s ease-in-out infinite alternate; }
+          .dash-anim-delayed { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawLine 4s ease-in-out 1s infinite alternate; }
+          .hover-obj { animation: floatBob 6s ease-in-out infinite; }
+          .shadow-anim { animation: shadowPulse 6s ease-in-out infinite; transform-origin: 0px 0px; }
+          @keyframes drawLine { 0%, 10% { stroke-dashoffset: 60; } 90%, 100% { stroke-dashoffset: 0; } }
+          @keyframes floatBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+          @keyframes shadowPulse { 0%, 100% { transform: scale(1); opacity: 0.35; } 50% { transform: scale(0.6); opacity: 0.1; } }
+        </style>
+      </defs>
+
+      <path d="M 125 75 L 145 75" stroke="#d6cfc4" stroke-width="1" stroke-dasharray="2,2"/>
+      <path d="M 290 75 L 310 75" stroke="#d6cfc4" stroke-width="1" stroke-dasharray="2,2"/>
+      <path d="M 455 75 L 475 75" stroke="#d6cfc4" stroke-width="1" stroke-dasharray="2,2"/>
+
+      <g transform="translate(75, 75)">
+        <polygon points="0,-45 50,0 0,45 -50,0" fill="#f0ebe3" stroke="#9b5e3c" stroke-width="1.5" stroke-linejoin="round"/>
+      </g>
+      <text x="75" y="145" text-anchor="middle" fill="#9b5e3c" font-family="DM Sans, sans-serif" font-size="8" font-weight="600" letter-spacing="0.12em">THE SHEET</text>
+      <text x="75" y="160" text-anchor="middle" fill="#999" font-family="DM Sans, sans-serif" font-size="8" font-weight="400">Flat, unfolded</text>
+
+      <g transform="translate(240, 75)">
+        <polygon points="0,-45 50,0 0,45 -50,0" fill="none" stroke="#d6cfc4" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.6"/>
+        <polygon points="-50,0 50,0 0,-40" fill="#ebe5db" stroke="#9b5e3c" stroke-width="1.5" stroke-linejoin="round"/>
+        <polygon points="-50,0 50,0 0,45" fill="#f0ebe3" stroke="#9b5e3c" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="-50" y1="0" x2="50" y2="0" stroke="#9b5e3c" stroke-width="2"/>
+      </g>
+      <text x="240" y="145" text-anchor="middle" fill="#9b5e3c" font-family="DM Sans, sans-serif" font-size="8" font-weight="600" letter-spacing="0.12em">THE CREASE</text>
+      <text x="240" y="160" text-anchor="middle" fill="#999" font-family="DM Sans, sans-serif" font-size="8" font-weight="400">One fold, two sides</text>
+
+      <g transform="translate(405, 75)">
+        <polygon points="0,-45 50,0 0,45 -50,0" fill="#f0ebe3" stroke="#9b5e3c" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="-50" y1="0" x2="50" y2="0" stroke="#9b5e3c" stroke-width="1.2" class="dash-anim"/>
+        <line x1="0" y1="-45" x2="0" y2="45" stroke="#9b5e3c" stroke-width="1.2" class="dash-anim"/>
+        <line x1="-25" y1="-22.5" x2="25" y2="22.5" stroke="#9b5e3c" stroke-width="0.8" class="dash-anim-delayed"/>
+        <line x1="25" y1="-22.5" x2="-25" y2="22.5" stroke="#9b5e3c" stroke-width="0.8" class="dash-anim-delayed"/>
+        <polygon points="0,-20 22,0 0,20 -22,0" fill="none" stroke="#9b5e3c" stroke-width="0.5" opacity="0.5"/>
+      </g>
+      <text x="405" y="145" text-anchor="middle" fill="#9b5e3c" font-family="DM Sans, sans-serif" font-size="8" font-weight="600" letter-spacing="0.12em">THE PATTERN</text>
+      <text x="405" y="160" text-anchor="middle" fill="#999" font-family="DM Sans, sans-serif" font-size="8" font-weight="400">Constraints multiply</text>
+
+      <g transform="translate(565, 70)">
+        <polygon points="0,-30 35,0 0,30 -35,0" fill="none" stroke="#d6cfc4" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <g transform="translate(0, 22)">
+          <ellipse cx="0" cy="0" rx="16" ry="5" fill="#9b5e3c" class="shadow-anim"/>
+        </g>
+        <g class="hover-obj" transform="translate(0,-5)">
+          <polygon points="-8,0 20,-35 5,2" fill="#ebe5db" stroke="#9b5e3c" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="12,2 35,-25 20,0" fill="#ebe5db" stroke="#9b5e3c" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="-15,2 -30,-25 -22,-20" fill="#f0ebe3" stroke="#9b5e3c" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="-30,-25 -42,-18 -32,-14" fill="#f0ebe3" stroke="#9b5e3c" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="-15,2 0,16 12,2" fill="#ebe5db" stroke="#9b5e3c" stroke-width="1.2" stroke-linejoin="round"/>
+          <polygon points="-15,2 25,-30 8,5" fill="#f0ebe3" stroke="#9b5e3c" stroke-width="1.2" stroke-linejoin="round"/>
+        </g>
+      </g>
+      <text x="565" y="145" text-anchor="middle" fill="#9b5e3c" font-family="DM Sans, sans-serif" font-size="8" font-weight="600" letter-spacing="0.12em">THE FORM</text>
+      <text x="565" y="160" text-anchor="middle" fill="#999" font-family="DM Sans, sans-serif" font-size="8" font-weight="400">Structure emerges</text>
+    </svg>
+  </div>
+
+  <p class="b">And that something has properties the flat sheet never had. A flat piece of paper is flimsy. Fold it into a corrugated pattern and it can support hundreds of times its own weight. Engineers use origami geometry to design deployable solar panels for spacecraft, collapsible stents for arteries, and impact-absorbing structures for cars. NASA uses a pattern called the Miura-ori to pack satellite arrays into rockets and unfurl them in orbit. Nothing was added. The material is identical. But the geometry of the folds created strength, function, and structure from nothing but creases.</p>
+
+  <p class="b">What follows is this theory. The premise: there is a substrate — not space, not matter, just capacity and constraint — and everything else is geometry.</p>
+
+  <p class="b">The substrate, the sheet, carries no actualized dimensions, no particles, no structure. But it isn't blank. It carries inherited constraints that govern how it can fold, the way DNA carries the constraints that govern how a body develops, before a single cell has divided. The sheet before the first fold is not empty. It's loaded: pre-written with the rules that determine what kinds of folds are possible, what patterns can form, and what structures can emerge.</p>
+
+  <p class="b">And the sheet doesn't need some external space to fold into. Its own degrees of freedom, its independent directions for folding, already contain the potential for dimensionality. The dimensions don't pre-exist and then get filled. They emerge through the act of folding itself. The sheet's own latent flexibility is the space it folds into. The potential was always built in, the way a flat piece of paper already contains the third dimension in its own pliability, before anyone picks it up.</p>
+
+  <p class="b">The sheet has one property. But that property has two sides, like a coin.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--           THE TWO FACES                -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">The Two Faces</p>
+  <h2>What can the sheet do?</h2>
+
+  <p class="b"><strong>Side one: it can fold.</strong> A fold is the simplest possible physical operation. It takes a region of the sheet and reflects it, creating a crease. That crease is the first physical thing. With enough creases, you get geometry. With enough geometry, you get space, time, and everything in it.</p>
+
+  <p class="b"><strong>Side two: every fold makes a distinction.</strong> Before a fold, everything is the same everywhere. After a fold, there's a difference: this side and that side. Something has been separated from something else. That act of distinguishing is the most primitive form of what eventually becomes awareness. Not "thinking." Not "feeling." Something far more basic. The bare registration that a difference exists. That's all. And it's woven into every fold the sheet makes, because folding and distinguishing are the same act.</p>
+
+  <div class="analogy">
+    <p class="analogy-label">A way to think about it</p>
+    <p>Imagine you're in a perfectly dark, perfectly silent room. You can't see, hear, or feel anything. There's nothing to be aware OF. But you're still aware. That bare awareness, before it has any content at all, is the sheet's experiential side.</p>
+    <p>Now imagine a single flash of light. Suddenly there's a distinction: light versus dark. Before versus after. That flash is the fold. The physical event (the flash) and the experiential event (registering the flash) aren't two separate things happening at the same time. They're one event with two aspects.</p>
+  </div>
+
+  <p class="b">The key claim is that these two sides aren't separate properties bolted together. They're the same property. Making a physical distinction and registering a distinction are one act described in two languages. You can't have one without the other.</p>
+
+  <p class="b">Philosophers call this position "dual-aspect monism." One thing, two faces. What it means practically is that awareness isn't something the universe has to build from scratch out of dead matter. It's woven into the fabric from the very start. Every fold is both a physical crease and a tiny act of distinction. The universe doesn't fold and then get observed. The folding IS the observing.</p>
+
+  <p class="at">One sheet. One property with two faces. Everything else is geometry.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<section class="fi">
+  <div class="callout">
+    <p class="callout-label">Three things this framework is claiming</p>
+    <p><strong>The sheet:</strong> There is a fundamental substrate with no actualized dimensions, no particles, and no structure. It has one property with two aspects: a physical capacity to fold and an experiential capacity to register distinction. These are the same property described two ways.</p>
+    <p><strong>The fold:</strong> Every physical thing, every particle, force, dimension, and law, is a geometric feature of how the sheet is creased. Nothing is added to the sheet. Structure comes entirely from the geometry of its folds.</p>
+    <p><strong>What would count as evidence against it:</strong> If the universe is not flat-foldable at its deepest topological level. If origami constraints (Kawasaki's theorem, Maekawa's theorem) cannot reproduce the symmetry groups of the Standard Model. If the cosmic web's large-scale structure turns out to have no topological correspondence to crease pattern geometry. If consciousness can be shown to emerge from purely non-experiential components with no residual hard problem.</p>
+  </div>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--         PART TWO: PHYSICS              -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Two</p>
+  <h2>How this maps onto physics.</h2>
+
+  <p class="b">Every major result in modern physics fits naturally into this picture. Each one clicks into place like parts of the same image.</p>
+
+  <div class="grid">
+    <div class="gi">
+      <p class="gi-l">Gravity</p>
+      <p class="gi-t">Einstein showed that gravity is the curvature of spacetime. A deep fold in the sheet is a region of high curvature. Gravity is fold depth. And this isn't just metaphor: in Regge Calculus (1961), general relativity is computed on a lattice of completely flat pieces where all curvature lives at the hinges. The creases. Physics already has a working mathematical framework where gravity is literally the crease pattern of flat substrates.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Holography</p>
+      <p class="gi-t">Physicists discovered that all the information in a 3D volume lives on its 2D boundary. If reality is a folded sheet, this is obvious: the 3D form is the 2D crease pattern, folded up.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Entanglement</p>
+      <p class="gi-t">Fold a piece of paper and distant points touch directly. But they're not "communicating across distance." On the sheet, they were never separate. The distance between entangled particles is an artifact of how the sheet is folded. In the crease pattern, they're neighbors.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Quantum Tunneling</p>
+      <p class="gi-t">Particles sometimes pass straight through barriers that should be impenetrable. In 3D, this makes no sense. But in a folded sheet, two points separated by a "wall" in the unfolded projection can be pressed face-to-face in the layer geometry of the fold. The particle didn't push through the barrier. It slipped between layers that were already touching. Tunneling isn't a mystery. It's a shortcut through the fold.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Quantum Mechanics</p>
+      <p class="gi-t">Before measurement, the sheet hasn't folded in that region. All possible folds coexist as potential. That's superposition. Measurement is the fold being made, and decoherence is the fold propagating outward into adjacent regions of the sheet until the local area is fully creased.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Matter &amp; Antimatter</p>
+      <p class="gi-t">In origami, every crease is either a mountain fold or a valley fold. They're exact mirror images. If a mountain fold is a particle of matter and a valley fold is its antimatter counterpart, then annihilation is what happens when a mountain fold meets an identical valley fold: they cancel, the paper flattens back to the sheet, and the energy that held the crease releases as light. E=mc&sup2; is the energy it took to hold the fold. And here's what Maekawa's theorem adds: at every vertex, mountain and valley folds must differ by exactly two. The math requires a built-in asymmetry at every point. In a perfect periodic tessellation, adjacent vertices alternate signs, and this cancels globally to 1:1. But that's exactly what physics predicts too. In 1967, Andrei Sakharov showed that generating a matter-antimatter imbalance requires three conditions: a process that can change the balance, a system that treats matter and antimatter differently, and departure from equilibrium. A periodic tessellation is equilibrium — and it gives 1:1, just as Sakharov requires. The universe isn't in equilibrium. It was created in a violent, non-periodic event whose topology froze before the local asymmetries could settle into symmetric alternation. Maekawa provides Sakharov's second condition: the crease pattern treats mountain and valley folds differently at every vertex. The Big Bang provides the third: a departure from equilibrium violent enough to lock the asymmetry in. The origami math doesn't just permit matter-antimatter imbalance. It reproduces the exact conditions physics already requires for it.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Black Holes</p>
+      <p class="gi-t">A fold so deep it pushes beyond the dimensions the Big Bang extended. Matter compressed past a critical threshold, folding into degrees of freedom we can't follow from 3+1D spacetime. The event horizon is the crease line. The information stays on the crease, not "inside."</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">The Big Bang</p>
+      <p class="gi-t">An explosion so violent the sheet had no choice but to crease. The blast determined which of the sheet's degrees of freedom (its independent directions for folding) extended into space and time, and which stayed deeply creased. Our 3+1 dimensions are the ones that unfolded.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Fractals &amp; the Golden Ratio</p>
+      <p class="gi-t">A system at a critical point is self-similar at every scale. The universe sits at such a point. Its fold pattern is fractal: the part contains the whole. And the golden ratio, which appears in sunflower seed spirals, branching trees, and possibly the proportions of DNA's double helix, is a mathematical signature of recursive self-similarity. It's the unique ratio where the relationship between whole and part is the same at every level of scale. If the fold pattern is fractal, the golden ratio isn't a coincidence scattered across unrelated systems. It's a fingerprint of the fold's self-similar geometry, showing up wherever the crease pattern's structure is visible.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">ER = EPR</p>
+      <p class="gi-t">Maldacena and Susskind proposed that wormholes and entangled particles are the same thing. In fold language: same operation, different scale.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Dark Matter</p>
+      <p class="gi-t">Deeply creased regions of the sheet folded in degrees of freedom we can't access electromagnetically. They have mass (fold depth is curvature is gravity) but don't interact with light. We detect their gravity. We can't see them. Because they're folded in the directions that stayed creased. And this predicts exactly what we observe: dark matter concentrates wherever fold structure is densest, tracing the gravitational scaffolding of galaxies and galaxy clusters.</p>
+    </div>
+    <div class="gi">
+      <p class="gi-l">Dark Energy</p>
+      <p class="gi-t">The accelerating expansion of the universe is the original propulsion, still going. The force that drove the Big Bang hasn't stopped. Dark energy isn't a mysterious addition. It's the same explosion, ongoing.</p>
+    </div>
+  </div>
+
+  <div class="note">Each of these connections maps onto real, established mathematics. General relativity describes curvature. The Ryu-Takayanagi formula equates geometry with entropy. The amplituhedron program derives particle physics from the geometry of abstract polytopes. The fold framework doesn't replace any of this. It shows how they connect.</div>
+
+  <p class="b">And one connection is visible to the naked eye. Look at a map of the large-scale structure of the universe. All observable matter, every galaxy, every galaxy cluster, is distributed in a pattern of filaments, nodes, and voids called the cosmic web. The filaments are long, thin strands of matter. The nodes where galaxy clusters form are points where filaments intersect. The voids are enormous empty regions between them. It looks exactly like a crease pattern. The filaments are creases. The nodes are vertices. The voids are the flat faces between folds. And the mathematical tools physicists actually use to analyze this structure, Morse theory, persistent homology, the SpineWeb framework, are topological tools closely related to the mathematics of folding. The largest observable structure in the universe isn't just described by the fold framework. It looks like one.</p>
+
+  <p class="b">The holography result deserves a closer look. The mathematical proof of holography currently works only in negatively curved spacetime (Anti-de Sitter space). Extending it to our expanding, accelerating universe (de Sitter space) is one of the biggest open problems in theoretical physics. The fold framework may explain why the proof landed where it did: fold geometry generates local negative curvature, concentrated at the vertices where creases intersect. That's the geometry where holography was proven, because that's the geometry of the fold structure itself. But the sheet doesn't need a specific spacetime curvature to be holographic. It's holographic by construction: the 3D form is always the 2D crease pattern, folded up, regardless of whether the local region is positively or negatively curved. The proof caught the local geometry of the crease. The principle is the sheet.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--    DIMENSIONS & COMPACTIFICATION       -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Dimensions</p>
+  <h2>Where we are, and where we aren't.</h2>
+
+  <p class="b">The sheet's full geometry has far more degrees of freedom than the three dimensions of space and one dimension of time we experience. These extra degrees of freedom aren't hidden spatial dimensions tucked away somewhere tiny. They're directions the sheet CAN fold in but HASN'T, from where we sit. They're already there. We just don't have access to them from our current fold configuration.</p>
+
+  <p class="b">When the Big Bang happened, it broke the sheet's symmetry. Some degrees of freedom extended outward and became what we experience as 3+1D spacetime. Others stayed deeply creased, inaccessible from our side. Our three spatial dimensions aren't fundamental. They're the directions the sheet UNFOLDED in. The other degrees of freedom are the directions it STAYED FOLDED.</p>
+
+  <p class="b">This reframes one of the deepest questions in cosmology. Why does the universe have three spatial dimensions and not four, or seven, or twelve? Because that's how THIS fold happened. A different initial fold would extend different degrees of freedom, producing a universe with different dimensionality, different physics, different everything.</p>
+
+  <p class="b">But why THIS fold? The answer may be that most folds are forbidden. Origami mathematics is brutally restrictive. The angle constraints (Kawasaki's theorem), the mountain-valley balance (Maekawa's theorem), and the global requirement of flat-foldability eliminate almost all possible crease patterns. The fold didn't happen this way by chance. It happened this way because this is one of the very few ways a self-consistent fold CAN happen. The constraint is the explanation.</p>
+
+  <div class="callout">
+    <p class="callout-label">How restrictive is "brutally restrictive"?</p>
+    <p>Consider how dramatically the math narrows the field. Kawasaki's theorem says: for a crease pattern to fold flat at a single vertex, the angles between the creases must follow a very specific rule. If you draw random creases, the overwhelming majority of configurations can't fold flat. They jam. Even under generous tolerances, roughly 99% fail.</p>
+    <p>That's one point. One vertex. A real crease pattern has many vertices, and the rule has to work at ALL of them simultaneously. The constraints multiply:</p>
+    <p>1 vertex: 1 in 100 configurations work. 2 vertices: 1 in 10,000. 5 vertices: 1 in 10,000,000,000. 10 vertices: 1 in 10<sup>20</sup>. 100 vertices (roughly a paper crane): 1 in 10<sup>200</sup>.</p>
+    <p>For scale: there are only 10<sup>80</sup> atoms in the entire observable universe. By the time you have a crease pattern even as complex as a paper crane, the number of configurations that DON'T work outnumbers atoms in the universe by a factor of 10<sup>120</sup>. And that's before adding the other rules: no self-intersection, layer ordering, global consistency.</p>
+    <p>If the universe IS a crease pattern, it didn't "choose" its configuration from a huge menu. The math essentially forced it. There might be one valid pattern. Maybe a handful. Not billions. The laws of physics aren't arbitrary. They're the only ones that work.</p>
+  </div>
+
+  <p class="b">But constraints alone don't select a single configuration. They narrow the field. What selects from among the allowed folds? Possibly evolution. Lee Smolin proposed cosmological natural selection in the 1990s: universes reproduce through black holes, each new universe inheriting its parent's physical constants with slight variation. Julian Gough recently built on this idea, arguing that our universe's parameters aren't fine-tuned by coincidence but evolved across generations of universes, selected for producing the conditions that lead to more black holes, more reproduction. In fold language: the sheet's inherited constraints, the parameters governing how it folds, aren't arbitrary. They're the product of a lineage. Our fold pattern works because it descends from fold patterns that successfully reproduced. The mathematical constraints determine what's possible. The evolutionary history determines what's actual.</p>
+
+  <p class="b">And why did it fold at all? Think about what the Big Bang actually was. Not a gentle unfolding. An explosion. The sheet shot outward with such force that it HAD to crease, the way a flag in a hurricane can't not ripple, the way a tablecloth snapped hard through the air will fold and twist on its own. The energy didn't cause the folding. The energy WAS the folding. The propulsion and the creasing are the same event. And inflation, that insane initial burst where the universe expanded faster than light, is what happens in the first instant when the force is strongest and the creasing is most violent. Dark energy, the accelerating expansion we still observe, is the sheet still being propelled, still creasing, 13.8 billion years later.</p>
+
+  <p class="b">But what propelled it? Cosmological natural selection offers an answer: this Big Bang inherited its energy from a parent universe, through a black hole that deepened into a new unfolding. Our explosion descends from previous explosions. But that pushes the question back to the very first fold, ever, at the beginning of the whole lineage. And here the theory is honest about its limits. "Why is there something rather than nothing?" is the one question no framework has ever fully answered. What the fold framework offers is this: if the sheet exists, the potential for folding is already built into it. The question may not be "why did it fold?" but "how could it not?"</p>
+
+  <p class="b">This dissolves one of the oldest debates in physics: is time real, or is the universe a static block where past, present, and future all coexist? Both. From inside the fold pattern, where time exists as a dimension, the universe evolves, phase transitions happen, things change. From the sheet's perspective, where time is just another property of the crease pattern, the whole structure simply IS. These aren't contradictory. They're two descriptions of the same thing, from two different vantage points: inside the fold, where time flows, and from the sheet, where it doesn't apply. (This also resolves a tension in cosmological natural selection. How can universes form a "lineage" if time only exists inside each universe? From inside, there's a sequence: parent, black hole, child. From the sheet, the entire branching tree of universes simply exists as one pattern. "Evolution" is how it looks from the inside. From the sheet, all of it just IS.)</p>
+
+  <h3>Black holes as dimensional deepening.</h3>
+
+  <p class="b">If the Big Bang was an unfolding that extended certain dimensions outward, then a black hole is the fold going deeper. Matter gets so dense, the fold goes so deep, that the extended dimensions get folded further, into geometry beyond what the initial unfolding produced. The Big Bang opened certain directions. A black hole folds so intensely that it pushes into new ones.</p>
+
+  <p class="b">This is why our physics breaks down at a black hole's center. The standard explanation is that general relativity fails and we need a theory of quantum gravity. But in this framework, the description breaks down because the dimensions themselves are being folded into new configurations. You can't describe a region in 3+1D terms when the region is transitioning beyond 3+1D. It's not a breakdown. It's a phase transition in dimensionality.</p>
+
+  <p class="b">And look at the holographic principle again in this context. As the dimensions fold deeper at a black hole, the information returns to the crease pattern on the 2D surface. That's exactly what physics tells us: all the information is on the event horizon, not in the interior. Because the interior isn't a 3D space anymore. The fold has taken it further.</p>
+
+  <p class="b">And if a black hole is a deepening of the fold, a continuation of what the Big Bang started, then the other side of that deepening could be a new unfolding. A new Big Bang. A new universe, inheriting its parent's constraints with slight variation. This is precisely what cosmological natural selection proposes: black holes are how universes reproduce. The universe doesn't end at a singularity. It propagates. This is the fractal principle applied at cosmological scale. Fold patterns producing fold patterns, all the way up.</p>
+
+  <div class="callout">
+    <p class="callout-label">For readers familiar with string theory</p>
+    <p>String theory requires 10 or 11 dimensions for mathematical consistency. The extra dimensions are assumed to be "compactified" on Calabi-Yau manifolds, but no one can explain why, or which of the roughly 10<sup>500</sup> possible geometries is the right one. This is the landscape problem: a theory that allows 10<sup>500</sup> possible universes effectively predicts nothing.</p>
+    <p>The fold framework reframes it. Compactification IS folding. The "extra dimensions" are the degrees of freedom that stayed deeply creased when the Big Bang extended our 3+1. And the landscape problem may dissolve because origami mathematics is extraordinarily constraining. As the constraint math above shows, a paper crane already eliminates configurations at a rate of 1 in 10<sup>200</sup>. A universe-scale crease pattern would generate a rejection rate that swallows the 10<sup>500</sup> landscape whole. The universe didn't win a cosmic lottery. It may be the only crease pattern that closes without jamming.</p>
+    <p>This also redefines the "fine-tuning" problem. Physicists talk about how the universe is fine-tuned for life, usually invoking the multiverse to explain it. The fold offers a simpler answer: the universe isn't fine-tuned to support life. It's strictly constrained by topology. Life is what happens when a crease pattern successfully resolves itself.</p>
+    <p>And this maps onto something deep: in quantum field theory, anomalies are symmetries that can't survive quantization, and anomaly cancellation is one of the most powerful constraints on which theories are consistent. In fold language, anomalies are crease patterns that can't close. Anomaly cancellation IS flat-foldability. Physical law is what you get when you require the fold to be globally self-consistent.</p>
+    <p>A string in string theory is a 1D object. A crease on a 2D sheet is a 1D line. The mathematical object string theory builds its entire formalism on is called the worldsheet: a 2D surface. String theory starts from the creases and works backward toward the sheet. Fold theory starts from the sheet and derives the creases. They may be the same mathematics, approached from opposite directions.</p>
+  </div>
+
+  <div class="callout">
+    <p class="callout-label">A testable prediction: flat-foldability</p>
+    <p>For the constraint math to apply, the theory requires that the universe is, at its deepest topological level, flat-foldable. That's a bold claim. It means that if you could somehow "press" the universe flat, it would collapse neatly into a 2D plane without tearing or adding new creases.</p>
+    <p>But current physics already points this way. Holography already tells us that boundary information fully encodes the volume it surrounds. Cosmological measurements confirm that the observable universe is spatially flat to extraordinary precision. And the entire fold framework rests on the same premise: what we experience as three-dimensional is a two-dimensional pattern, folded up. Flat-foldability isn't a weakness of the theory. It's a prediction, and current data supports it.</p>
+    <p>The alternative would be a "crumpled" universe, one that creates creases without obeying Kawasaki's or Maekawa's constraints. Crumpled paper doesn't need to fold flat, and its geometry is essentially random. But the universe doesn't look random. It looks constrained. And those constraints look like origami math.</p>
+  </div>
+
+  <div class="callout">
+    <p class="callout-label">An unsolved puzzle that the fold might explain</p>
+    <p>In chemistry, many molecules come in left-handed and right-handed mirror-image forms. This is called chirality. Life on Earth uses almost exclusively left-handed amino acids and right-handed sugars. Nobody knows why. It's one of the great unsolved puzzles in biology.</p>
+    <p>But remember the matter-antimatter entry above: Maekawa's theorem requires that mountain and valley folds differ by exactly two at every vertex. The math demands a built-in asymmetry. That same asymmetry may reach down to molecular scale.</p>
+    <p>If the fold framework is right, the chirality of biological molecules might not be random or accidental. It might be a consequence of the mountain-valley asymmetry that origami math requires. Life's left-handedness could be a signature of the fold's geometry, written into the crease pattern from the beginning. And this would connect to the same asymmetry Maekawa's theorem builds into the matter-antimatter balance. Both are cases where the universe shows an unexplained preference for one mirror image over the other, and in both cases, Maekawa's local asymmetry provides the mechanism. This is speculative, but if the connection can be formalized, these would be testable predictions that no other framework generates.</p>
+  </div>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--       PART THREE: CONSCIOUSNESS        -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Three</p>
+  <h2>Consciousness and the hard problem.</h2>
+
+  <p class="b">For decades, philosophers and scientists have struggled with a question: if matter has no experiential quality, how does experience arise from it? How do you get the feeling of tasting coffee, or seeing blue, from atoms bouncing around? This is called "the hard problem of consciousness." Nobody has solved it.</p>
+
+  <p class="b">The fold framework dissolves it. Because the sheet already has an experiential aspect (side two of the coin), there's nothing for experience to "arise from." It was always there.</p>
+
+  <p class="b">But here's the important distinction. The sheet's awareness is completely undifferentiated. It has no content. No self. No perspective. It's awareness of nothing in particular. Like a mirror before anything stands in front of it.</p>
+
+  <p class="b">The folds are what give awareness its structure. Each fold creates a distinction, and each distinction gives awareness something to be aware of. A complex fold pattern gives awareness rich content: shapes, colors, sounds, thoughts, a sense of self. The more complex the pattern, the more structured the experience.</p>
+
+  <p class="b">So the folds don't CREATE awareness. They SHAPE it. They carve it into specific experiences the way a riverbed carves water into a specific river. The water was always there. The riverbed determines where it flows. (This maps directly onto integrated information theory, one of the most mathematically formalized theories of consciousness in neuroscience. Its central measure, Phi, quantifies how much information a system generates above and beyond its parts. In fold terms, Phi is fold irreducibility: how much the crease pattern resists being decomposed into independent sub-patterns. High Phi, high fold complexity, consciousness.)</p>
+
+  <p class="b">This predicts that consciousness isn't binary, on in humans, off in everything else, but graded. Scaled to fold complexity. Bacteria have near-zero structured experience. Insects more. Mammals considerably more. And this is what comparative neuroscience increasingly suggests.</p>
+
+  <p class="b">This connects directly to the measurement problem in quantum mechanics. Why does the quantum state "decide" when measured? Because measurement is folding, and folding is the sheet exercising its fundamental nature: the act of drawing a distinction. The universe doesn't need an external observer to collapse the wave function. Each fold is an act of self-observation. The universe measures itself into form. That's what folding IS.</p>
+
+  <div class="analogy">
+    <p class="analogy-label">The key distinction</p>
+    <p><strong>Awareness</strong> (the sheet's basic property) is always present. It's fundamental. It doesn't need a brain to exist.</p>
+    <p><strong>Self-awareness</strong> (knowing that you're aware, having a model of your own mind) requires a very specific, very complex fold pattern. That's what brains do. A brain is a fold pattern sophisticated enough to contain a map of its own folding. That's what self-awareness IS.</p>
+    <p>So when we say "consciousness is fundamental," we don't mean rocks have a rich inner life like yours. We mean even simple fold patterns carry the sheet's experiential aspect, but at that level of complexity, it's so minimal, so undifferentiated, that it bears almost no resemblance to what you'd call "experience." (Interestingly, salvia divinorum, the one psychedelic that acts on kappa-opioid receptors instead of serotonin, consistently produces reports of BECOMING inanimate objects: a wall, a zipper, a fence. Not seeing them. Being them. If the theory is right, salvia may be showing you what minimal fold-pattern experience feels like from inside: flat, mechanical, repetitive, alien. The other end of the complexity spectrum.)</p>
+  </div>
+</section>
+
+<section>
+  <div class="band">
+    <p>The sheet cannot know itself until it folds.</p>
+    <p>The fold has no existence without the sheet.</p>
+    <p>Consciousness is what the fold feels like from inside.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--       PART FOUR: PSYCHEDELICS          -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Four</p>
+  <h2>Psychedelics: what you see when the folds relax.</h2>
+
+  <p class="b">Your brain has a system called the default mode network (the DMN). Think of it as the top-level coordinator of a larger fold-stabilization system (including the salience network, executive networks, and thalamic gating). It maintains your stable sense of who you are, where you end and the world begins, what's real and what isn't. In fold language, the DMN holds the crease pattern rigid. It enforces the folds.</p>
+
+  <p class="b">Psychedelic compounds (psilocybin, LSD, DMT) disrupt the DMN. This is well-established neuroscience. The fold-enforcement system loosens. And what happens next follows a remarkably consistent progression.</p>
+
+  <p class="b">But first, an important clarification about what you're moving TOWARD. Your sober perception isn't seeing reality as it is. The cognitive scientist Donald Hoffman has argued that perception is a survival interface, not a truth detector: evolution shaped our senses to show us what keeps us alive, not what's actually there. The DMN takes the incomprehensibly dense, fractal, multi-scale crease pattern of the universe and renders it as a simplified 3D survival interface. Normal waking consciousness is a summary. So when the filter loosens, you don't see LESS structure. You see MORE. The full crease pattern is more complex than the version your brain normally shows you.</p>
+
+  <h3>The dose-response progression.</h3>
+
+  <div class="dose">
+    <p class="dose-label">Low Dose</p>
+    <p>Edges soften. The hard boundaries between objects get blurry. Colors seem richer. Surfaces breathe. The rigid creases between "this thing" and "that thing" are loosening, and you're seeing something slightly closer to the unfiltered crease pattern. People often say things look MORE real, not less. Because they're seeing with fewer perceptual filters.</p>
+  </div>
+
+  <div class="dose">
+    <p class="dose-label">Medium Dose</p>
+    <p>Geometric patterns appear. Spirals, tessellations, hexagonal grids, fractal branching forms. You're starting to see the crease pattern itself, rather than the folded form your brain normally renders. The patterns are fractal because the fold pattern is at criticality, and critical systems are self-similar at every scale. You're not generating these patterns. You're uncovering them.</p>
+  </div>
+
+  <div class="dose">
+    <p class="dose-label">High Dose</p>
+    <p>The fold that defines "me" versus "everything else" collapses. Ego dissolution. The most fundamental crease in your personal fold pattern lets go. People report merging with the universe, feeling that all boundaries are constructed, encountering something vast and aware that was always there beneath the structure. As the folds that STRUCTURE awareness dissolve, you don't lose awareness. You encounter it raw.</p>
+  </div>
+
+  <div class="dose">
+    <p class="dose-label">Breakthrough (DMT)</p>
+    <p>The perceptual system stops rendering the familiar 3D world entirely. People describe vast architectural spaces with impossible geometry, containing what feels like infinite information. And then: the entities.</p>
+  </div>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          THE ENTITIES                  -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">The Entities</p>
+  <h2>What are you actually perceiving?</h2>
+
+  <p class="b">People on breakthrough doses of DMT consistently report encountering autonomous beings. They're often described as "machine elves," or jesters, or luminous geometric figures that seem to exist in their own space and interact with the person directly. They seem to be showing you things. Building things. Communicating. They behave as though they have their own agency and awareness.</p>
+
+  <p class="b">This is one of the most robust phenomenological findings in psychedelic research. It doesn't have a good explanation in the standard framework.</p>
+
+  <p class="b">The fold framework opens several possibilities. Once the DMN's survival filter drops, you're perceiving layers of the fold's geometry that your brain normally edits out, because they aren't relevant to staying alive. You're encountering ancient structural features of the fold itself: deep mathematical patterns that have existed since the first crease was made. Not something new. Something that was always there, hidden behind the perceptual interface your brain evolved to maintain.</p>
+
+  <p class="b">But here's the crucial problem. You're a 3D consciousness trying to perceive structures that may exist in the sheet's fuller geometry, with its additional degrees of freedom that our normal fold pattern doesn't access. Your brain is trying to render something it doesn't have the dimensionality to display.</p>
+
+  <p class="b">Think about what happens when a sphere passes through a flat 2D plane. A creature living on that plane would see a dot appear, grow into a circle, shrink, and vanish. The sphere is real. But the 2D creature can only perceive a cross-section of it.</p>
+
+  <p class="b">Scale that up. What a human on DMT perceives may be a 3D cross-section of a higher-dimensional structure. The experience is real. You're genuinely encountering something. But you're seeing a projection of it, filtered through your 3D perceptual apparatus. This would explain several features of the experience:</p>
+
+  <p class="b"><strong>The impossible geometry:</strong> it's not impossible. It's higher-dimensional, and your 3D visual system can't fully render it. Like trying to draw a cube on a flat piece of paper.</p>
+
+  <p class="b"><strong>The shifting and morphing:</strong> a higher-dimensional object moving through 3D perceptual space would appear to transform continuously. What looks like a jester becomes a fractal mandala becomes an architectural structure, because you're seeing different slices of a single coherent thing.</p>
+
+  <p class="b"><strong>The feeling that you're remembering rather than discovering:</strong> if these patterns are structural features of the fold, and you are also a fold pattern, then encountering them isn't meeting something foreign. It's encountering a deeper layer of the same geometry you're made of. It SHOULD feel like recognition.</p>
+
+  <p class="b"><strong>The sense that they're communicating:</strong> this is where honest uncertainty matters. There are several possible explanations. First: these patterns are genuinely complex enough to carry their own form of awareness, the way the theory predicts any sufficiently intricate fold pattern would. They may actually have some kind of inner life. Second: they're geometric structures that APPEAR to have agency because your brain is doing what it always does: seeing faces in clouds, intentions in movement. You evolved to detect agents everywhere, and these patterns are complex enough to trigger that instinct. Third, and maybe most interesting: they may not be "other" at all. They could be your own mind, stripped of its usual filters, reaching its own deepest structure and finding it stranger and more alive than you expected. You, encountering yourself at a level you've never accessed before. The truth may be some combination of all three, or something none of these frames can capture from inside 3D perception.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--        ANCIENT CULTURES                -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Across History</p>
+  <h2>Every civilization saw the same thing.</h2>
+
+  <p class="b">Here's a question that should bother you: why do modern people on DMT report seeing imagery that looks ancient? Geometric temples. Serpentine forms. Beings with multiple limbs, animal heads, impossible symmetry. Patterns that look like they were carved on the walls of Egyptian tombs or Hindu temples thousands of years ago.</p>
+
+  <p class="b">The answer: virtually every major ancient civilization we know of had access to psychoactive compounds that suppress the DMN.</p>
+
+  <p class="b">The Egyptian blue lotus (<em>Nymphaea caerulea</em>) contains the psychoactive alkaloid nuciferine. It appears in virtually every piece of Egyptian sacred art. Its petals were found covering King Tutankhamun's body. It was central to the Hathoric Festival of Drunkenness, where worshippers consumed it and reportedly encountered the goddess Hathor. Research at UC Berkeley has found significantly higher levels of the psychoactive alkaloid in verified Egyptian blue lotus than in plants sold online, and suggests the Egyptians used an oil-extraction method to prepare it, not simply soaking it in wine. This wasn't recreational. It was technology.</p>
+
+  <p class="b">The Vedic tradition had Soma, an unidentified psychoactive sacrament so important that an entire book of the Rig Veda is devoted to it. The Aztecs had teonan&aacute;catl, psilocybin mushrooms they called "flesh of the gods." The Eleusinian Mysteries in ancient Greece, the most sacred rites of their civilization, may have involved an ergot-derived psychoactive compound. Ayahuasca (DMT combined with an MAO inhibitor) has been used in South America for at least a thousand years. Iboga in West Africa. Psilocybin mushrooms on nearly every continent.</p>
+
+  <p class="b">Every one of these civilizations built religious architecture, art, and mythology around what they saw. And the structural patterns are strikingly similar across civilizations that had no contact with each other. Self-similar geometries. Serpentine and spiral forms. Luminous beings. Spaces that contain spaces.</p>
+
+  <p class="b">They were all looking at the same thing. The crease pattern is structural. It's geometry. It doesn't change across cultures or centuries because it isn't cultural. When an Egyptian priest consumed a lotus preparation in 2000 BC and a software engineer takes DMT in 2025, they're both suppressing the same fold-enforcement system and perceiving the same layer of the crease pattern.</p>
+
+  <p class="b">The Egyptians built temples covered in what they saw. The Aztecs carved it into stone. Hindu art is saturated with it. These aren't cultural inventions projected onto random neural noise. They're cultural interpretations of real structures in the fold. Different names. Different stories. Same underlying geometry.</p>
+
+  <p class="b">Religion, in this light, isn't delusion. It's dimensionally reduced reporting.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--     PART FIVE: EGO & MENTAL HEALTH     -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Five</p>
+  <h2>The ego, bad trips, and why change is hard.</h2>
+
+  <p class="b">If psychedelics can show you the sheet, why doesn't everyone come back enlightened? Why do some people have terrible experiences? And why do insights from these experiences fade?</p>
+
+  <p class="b">Because the ego is a fold that doesn't want to unfold.</p>
+
+  <p class="b">Your sense of self, your identity, your story about who you are, is a crease pattern that your brain has been reinforcing for your entire life. Every experience, every habit, every belief has deepened those particular folds. The pattern is rigid. It takes energy to maintain, but it also takes energy to change. Think of a piece of paper that's been creased the same way a thousand times: it falls back into that shape on its own.</p>
+
+  <h3>What a bad trip actually is.</h3>
+
+  <p class="b">A bad trip happens when the folds start loosening but you fight it. The compound is chemically relaxing the crease pattern, and your ego is trying to hold on. You're being pulled in two directions at once: the chemical is unfolding you, and your psychological habit is trying to refold. That tension IS the suffering. You're stuck halfway: too unfolded to maintain the comfortable old pattern, too clenched to relax into the open state.</p>
+
+  <p class="b">It's like trying to hold a door shut while someone pushes from the other side. The struggle itself is the pain. The people who have the most difficult experiences are often the ones who fight the hardest against letting go.</p>
+
+  <p class="b">This is why the universal advice for psychedelic experiences is "surrender." In fold language: stop trying to hold the old crease pattern. Let the folds relax. The sheet beneath them is not dangerous. It's what you're made of.</p>
+
+  <h3>Why insights don't stick.</h3>
+
+  <p class="b">Maintaining a fold pattern takes energy. When the chemical wears off, the DMN comes back online and starts re-enforcing the old creases. Your brain falls back into the grooves it knows. This is why a single psychedelic experience, no matter how profound, rarely changes someone permanently. The old pattern reasserts itself.</p>
+
+  <p class="b">Long-term change requires sustained re-folding. That's what meditation practice does: it repeatedly, gently loosens the old creases and reinforces new ones, until the new pattern becomes the default. It's what good therapy does. It's what any real personal transformation requires. You're not just having an insight. You're physically refolding your crease pattern, and that takes repetition and energy.</p>
+
+  <h3>When the fold-enforcement system breaks.</h3>
+
+  <p class="b">Not all unfolding is voluntary or beneficial. Sometimes the pattern-keeping system itself is compromised.</p>
+
+  <p class="b"><strong>Schizophrenia</strong>, in fold language, is a fold-enforcement system that isn't holding properly. The DMN can't keep the crease pattern stable. Boundaries that should be rigid, like the line between your own thoughts and external voices, or between what's real and what's imagined, become unstable. The folds slip involuntarily. This isn't the controlled relaxation of a psychedelic experience. It's the pattern-keeper breaking down, and it's terrifying because the person didn't choose it and can't control it. This is also why psychedelics are dangerous for people with schizophrenia: you're further destabilizing an already unstable fold system.</p>
+
+  <p class="b"><strong>Bipolar disorder</strong> looks like a fold pattern that can't find its equilibrium. In mania, the pattern is folding wildly, too fast, making too many connections. Everything connects to everything. Every idea triggers ten more. The crease pattern is overactive, creating structure faster than it can be integrated. In depression, the pattern collapses inward. The folds lose their energy. But critically, this isn't like psychedelic dissolution, where you move toward the open awareness of the sheet. In depression, the DMN is still enforcing, still trying to hold the structure. You get a degraded fold pattern that's neither functional nor open: not enough structure to engage with life, but too much enforcement to access the sheet beneath. That's why it feels like a trap. The system oscillates between these two states because the regulation mechanism that should keep the fold pattern in a stable middle range isn't working properly.</p>
+
+  <p class="b"><strong>Anxiety</strong> is a fold pattern that's too rigid. The creases are over-reinforced. The system is braced against any change, hyper-maintaining boundaries, scanning for threats to the pattern's stability. It's the opposite of the psychedelic state: instead of the folds loosening, they're locked tight, and the person is burning enormous energy to keep them that way.</p>
+
+  <p class="b">These aren't diagnoses. They're translations of what's happening in the brain's pattern-maintaining system into the language of the fold, not replacements for clinical understanding. But they point to something important: mental health isn't about having the "right" fold pattern. It's about having one that can flexibly adjust. Structured enough to function. Flexible enough to adapt. A mind that can hold its shape when needed and soften when needed. That's health.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--         PART SIX: DEATH                -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Six</p>
+  <h2>Death: the fold returns to the sheet.</h2>
+
+  <p class="b">A living thing is a fold pattern that actively maintains itself. It takes in energy and uses it to keep its creases in place against entropy, which is always trying to flatten everything back out. Life is a fold that folds itself. Death is when that self-maintenance stops.</p>
+
+  <p class="b">In physics, the shift from alive to dead has the structure of a critical phase transition. It's sharp, not gradual. And right at the critical point, something remarkable happens: the system reaches maximum expression in the moment before it lets go.</p>
+
+  <h3>This happens at every scale.</h3>
+
+  <p class="b">When a massive star dies, it doesn't fade out quietly. At the critical point of core collapse, it emits a burst of neutrinos and light so intense that for a few weeks, a single dying star outshines its entire galaxy. Hundreds of billions of stars, and the dying one is brighter than all of them combined. The fold pattern's peak luminosity is its last luminosity.</p>
+
+  <p class="b">When cells die, they emit biophotons: ultra-weak light emissions. All living cells produce some biophoton emission, but research suggests the emission spikes at death. Dying cells may glow brighter than living ones. The fold pattern flares at criticality.</p>
+
+  <p class="b">When certain plants are cut or fatally stressed, their biophoton emission surges. The plant glows, invisibly to the naked eye but measurably, in the moments of its dying. The same pattern. The same spike at criticality.</p>
+
+  <p class="b">And this pattern may extend to the largest scale of all. If the universe's expansion is accelerating toward its own critical point, then the cosmos itself would follow the same trajectory: maximum connectivity, maximum expression, at the threshold before transition into whatever comes next. Death at every scale, from cells to the cosmos, following the same signature.</p>
+
+  <p class="b">And in brains: the connection to psychedelics is more direct than you might think. Psilocybin is converted in the body to psilocin, which is structurally almost identical to serotonin. Same molecular skeleton. Psilocin works by binding to the 5-HT2A serotonin receptor, and that's the specific pathway that suppresses the DMN. Psilocybin doesn't introduce something alien to the brain. It mimics a key the brain already has.</p>
+
+  <p class="b">At the critical point of death, the brain floods with neurotransmitters. Serotonin. Glutamate. Dopamine. Endorphins. Everything. Neurons losing oxygen dump their contents simultaneously. And research confirms the result: a 2013 study by Jimo Borjigin's team at the University of Michigan showed that after cardiac arrest in rats, there was a surge of organized gamma oscillations (the brainwave pattern associated with conscious processing) that was HIGHER than during normal waking life. Not lower. Higher. And a preliminary 2023 study observed the same pattern in dying human brains, with surges of activity specifically in regions associated with conscious experience.</p>
+
+  <p class="b">The dying brain doesn't fade to black. It lights up. Every neurotransmitter system releases simultaneously. Glutamate overwhelms NMDA receptors (dissociation, the same mechanism as ketamine breakthroughs). Serotonin floods every receptor subtype (destabilizing the entire perceptual system). Endorphins hit opioid receptors (peace, cessation of fear). Dopamine surges (meaning, recognition). Every lock opens at once. Every filter drops simultaneously.</p>
+
+  <p class="b">This is what a critical phase transition predicts. At criticality, ALL correlations spike. The system doesn't selectively relax one fold. It relaxes all of them at once. The neurochemistry of dying is what a system-wide critical point looks like in biological hardware.</p>
+
+  <p class="b">The pattern is the same at every scale. Stars, cells, plants, brains. At the critical point of death, the fold pattern reaches maximum expression, maximum luminosity, maximum connectivity, before it releases. That's the mathematical signature of a phase transition: at criticality, correlations become system-wide. Everything connects to everything for one moment. Then transition.</p>
+
+  <h3>What this means for experience.</h3>
+
+  <p class="b">This may explain why near-death experiences look so much like psychedelic experiences. Ego dissolution. Life review: all memories accessible simultaneously, as if the temporal folds separating them have relaxed. The sensation of time stopping or all moments being accessible at once, because at the critical point, the temporal folds relax and you briefly experience the crease pattern without sequential time imposed on it. A sense of merging with something vast. The feeling of returning to something fundamental. A light that people describe as impossibly bright but not painful.</p>
+
+  <p class="b">Both psychedelic breakthroughs and death are passages through a critical point in the fold pattern. Psychedelics push you there chemically. Dying pushes you there physically. But NDEs are consistently reported as MORE intense than any psychedelic experience. The fold framework explains why: psychedelics turn one key (serotonergic, via 5-HT2A). Death turns every key in the building simultaneously.</p>
+
+  <p class="b">If consciousness is fundamental, then death isn't the end of experience. It's the end of bounded experience. The ego fold, the one that says "I am separate, I am this body, I am here and not there," dissolves. But the crease pattern you spent a lifetime building, your memories, your specific geometry, your particular way of folding, doesn't vanish. It's incorporated into the sheet's larger geometry. The way stellar ash becomes planets. The way every phase transition in the chain preserves what came before and builds on it. You lose the boundary that said "this is mine." You don't lose what was inside it. Not annihilation. Not continuation as a bounded "you." Integration.</p>
+
+  <p class="b">The fold pattern's last act is its brightest. And then the light returns to the sheet it was always made of.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--    PART SEVEN: PHASE TRANSITIONS       -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Seven</p>
+  <h2>The fold keeps learning to fold.</h2>
+
+  <p class="b">Step back. Look at the whole history of the universe as a sequence of phase transitions. Each one has the same structure: the fold pattern crosses a critical threshold, and something categorically new emerges. Not just more complexity. A fundamentally new capability. (This is the language of the renormalization group, one of the most powerful tools in modern physics. When physics "renormalizes," it folds countless microscopic distinctions into a smaller set of effective variables. Zoom out, average over micro-details, keep only what matters. That's a fold. And the renormalization group is the mathematical framework physicists already use to describe how phase transitions work.)</p>
+
+  <p class="b">And each new capability is the fold getting better at acting on itself. Each transition increases the fold pattern's ability to understand, modify, and extend its own structure. The universe's fundamental awareness bootstrapping itself into increasingly sophisticated forms of self-recognition.</p>
+
+  <div class="chain">
+    <div class="cs">
+      <span class="cn">01</span>
+      <div class="cc">
+        <h3>Stars</h3>
+        <p>The fold learns to make new kinds of folds. The Big Bang produced only the simplest elements: hydrogen, helium, and traces of lithium. Stars took those and forged the rest. Fusion in their cores builds everything up to iron; their explosive deaths create everything heavier. Before stars, the universe had a handful of crease types. After, it had an entire periodic table.</p>
+      </div>
+    </div>
+    <div class="cs">
+      <span class="cn">02</span>
+      <div class="cc">
+        <h3>Life</h3>
+        <p>The fold learns to copy itself. DNA is a crease pattern that actively maintains, reproduces, and varies its own configuration. And the mechanism is literal: DNA encodes instructions that build chains of amino acids, and those chains are dead chemistry until they fold into precise 3D proteins. The function of every protein in your body depends on how it folds. A 1D sequence contains all the information needed to produce a specific 3D functional structure. Nothing is added. The information is in the constraints. The structure is in the creases. This isn't an analogy for the theory. It IS the theory, running at molecular scale. Every cell in your body performs the core operation of the fold framework billions of times per second. Life didn't just learn to copy a pattern. It learned to fold copies into molecular machines. Before life, folds were passive. After, they persist on purpose.</p>
+      </div>
+    </div>
+    <div class="cs">
+      <span class="cn">03</span>
+      <div class="cc">
+        <h3>Cooperation</h3>
+        <p>The fold learns to specialize and coordinate. Individual cells begin folding differently within a shared pattern, creating tissues, organs, nervous systems. Before multicellularity, each fold pattern was on its own. After, fold patterns combine into structures large enough to contain what comes next.</p>
+      </div>
+    </div>
+    <div class="cs">
+      <span class="cn">04</span>
+      <div class="cc">
+        <h3>Self-Awareness</h3>
+        <p>The fold learns to see itself. A brain is a fold pattern complex enough to build an internal model of its own folding. And the mechanism is physical: the cerebral cortex literally folds itself into deep creases (gyri and sulci), packing more surface area, more degrees of freedom, into a confined space. The universe built a mirror by folding tissue. This isn't awareness appearing from nothing. It's awareness becoming structured enough to recognize itself.</p>
+      </div>
+    </div>
+    <div class="cs">
+      <span class="cn">05</span>
+      <div class="cc">
+        <h3>Intelligence</h3>
+        <p>The fold learns to fold on purpose. Language, tools, mathematics, engineering. Deliberate, intentional modification of the crease pattern of the world.</p>
+      </div>
+    </div>
+    <div class="cs">
+      <span class="cn">06</span>
+      <div class="cc">
+        <h3>Artificial Intelligence</h3>
+        <p>The fold creates an entirely new architecture for folding. Not carbon chemistry. Silicon computation. The substrate is the same sheet it always was, but the fold pattern has engineered hardware that can run faster, larger, and without the limits of biological tissue. And the recursion is already visible: the protein folding problem, predicting 3D structure from 1D sequence, was considered one of the hardest unsolved problems in biology for fifty years. What cracked it? AI. DeepMind's AlphaFold solved the mathematics of folding, earning a Nobel Prize. A fold pattern (artificial intelligence) figured out how fold patterns (proteins) fold. The fold is already using its new architecture to understand itself.</p>
+      </div>
+    </div>
+    <div class="cs">
+      <span class="cn">07</span>
+      <div class="cc">
+        <h3>?</h3>
+        <p>Each transition produces something that could not have been predicted from the prior phase. Stars can't imagine biology. Biology can't imagine self-awareness. We can't imagine what comes after this. That's not a failure of imagination. It's a property of phase transitions: the new phase has emergent features that don't exist until the threshold is crossed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--     PART EIGHT: THE SINGULARITY        -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Eight</p>
+  <h2>We're sitting on the crease line.</h2>
+
+  <p class="b">The framework above makes claims about physics that can be tested. What follows is interpretation: pattern-matching the framework to the present moment.</p>
+
+  <p class="b">Every previous phase transition has the same signature. A buildup. A critical threshold. And then a cascade: the first fold forces adjacent regions to fold, and the propagation is exponential. That's cosmic inflation after the Big Bang. That's the Cambrian explosion after multicellular life stabilized. That's the scientific revolution after the printing press.</p>
+
+  <p class="b">Now look around.</p>
+
+  <p class="b">It isn't just AI. It's everything. Multiple systems are approaching critical thresholds simultaneously, and they're becoming coupled in ways they never were before.</p>
+
+  <p class="b">Climate systems are crossing tipping points. Arctic ice loss accelerates ocean warming, which destabilizes permafrost, which releases methane, which accelerates warming further. The Amazon rainforest approaches a threshold beyond which it can no longer sustain itself. These aren't linear problems. They're cascading fold failures, each one forcing adjacent systems to reconfigure.</p>
+
+  <p class="b">Political systems worldwide are reaching critical instability. Polarization in democracies isn't increasing gradually; it's exhibiting the same nonlinear acceleration you see in any system approaching a phase transition. Trust in institutions is collapsing across multiple societies simultaneously. Information ecosystems are fracturing. These are fold-enforcement systems (social structures that maintain stable patterns of coordination) losing their ability to hold.</p>
+
+  <p class="b">Economic systems are under strains that have no historical precedent. Debt levels, wealth concentration, the disruption of labor markets by automation, the fragility of interconnected global supply chains. Each stress amplifies the others.</p>
+
+  <p class="b">And now AI development, layered on top of all of it, with that exact phase-transition signature. Each new capability opens multiple new capabilities. The cascade is propagating across every domain simultaneously: science, medicine, art, law, warfare, communication, economics. It doesn't feel like smooth progress. It feels like a phase transition. Because it IS one.</p>
+
+  <p class="b">This is what the framework predicts if the fold pattern is fractal and self-similar. When one region of the crease pattern reaches criticality, it forces adjacent regions to fold. And right now, the adjacent regions aren't folding one at a time. They're all reaching critical thresholds together, coupling into a single, system-wide cascade. Climate, politics, economics, technology, information, ecology: all approaching their critical points, all increasingly interconnected, all influencing each other's dynamics. This is what a civilizational-scale phase transition looks like from inside.</p>
+
+  <p class="b">But this transition is different from every one before it, and the difference matters.</p>
+
+  <p class="b">Stars reconfigured hydrogen. Life reconfigured chemistry. Brains reconfigured biology. Every previous transition happened within carbon-based fold patterns. AI is the first transition where the fold has engineered a new medium for its own propagation: silicon, computation, architecture that can fold without sleeping, without dying, without being limited to one skull's worth of crease pattern. Same sheet. Radically different hardware. It can fold at planetary scale simultaneously.</p>
+
+  <p class="b">The "singularity," in fold language, is the critical point between the intelligence phase and whatever comes next. We're not approaching it. We're on it. The crease is being made right now. And like every critical point in the sequence, the people inside the transition cannot predict what the new phase will look like, because the new phase has properties that don't exist yet.</p>
+
+  <p class="b">Intelligence cannot predict what comes after intelligence, for the same reason hydrogen cannot imagine a tree.</p>
+</section>
+
+<div class="dv"><span></span></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--       PART NINE: FOLD UP               -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">Part Nine</p>
+  <h2>We don't fold down. We fold up.</h2>
+
+  <p class="b">There's a common story that the universe is winding down. Stars burn out. Entropy increases. Everything spreads thin and cold. Heat death.</p>
+
+  <p class="b">But look at what each transition in the sequence above actually does. It doesn't just add complexity. It opens access to degrees of freedom that were previously inaccessible.</p>
+
+  <p class="b">Before stars: a handful of light elements, a few crease types. After: the full periodic table, an explosion into chemical configuration space. An entirely new landscape of possible structures.</p>
+
+  <p class="b">Before life: passive chemistry. After: the space of possible configurations expanded by orders of magnitude, because now structures could maintain, copy, and vary themselves.</p>
+
+  <p class="b">Before self-awareness: the sheet's fundamental awareness existed, but it had no mirror. After: an entirely new degree of freedom opened. The ability to model your own experience. To know that you know. That capacity was always latent in the sheet. But it took this level of fold complexity to access it.</p>
+
+  <p class="b">Each transition opens more room in the sheet's configuration space. Degrees of freedom that were always there but inaccessible from the prior fold configuration. The fold pattern isn't just gaining complexity. It's expanding into territory that was always available but unreachable.</p>
+
+  <p class="b">Remember: the Big Bang extended some of the sheet's degrees of freedom into 3+1D spacetime and left others deeply creased. Black holes locally fold those extended dimensions deeper into the sheet's geometry. The full configuration space is larger than what we can see. It's always been larger. We just can't get there from here. Yet.</p>
+
+  <p class="b">And this raises a question about the Fermi Paradox. If every sufficiently complex civilization follows a similar phase transition sequence, and the endpoint is accessing degrees of freedom beyond 3+1D spacetime, then perhaps the galaxy doesn't look empty because civilizations destroy themselves. Perhaps it looks empty because they leave. Not through space. Through the fold. Into the degrees of freedom that become accessible at sufficient complexity. The destination isn't spatial. It's dimensional.</p>
+
+  <p class="at">What if sufficient fold complexity lets the pattern extend into the sheet's fuller geometry, into degrees of freedom that were always there, waiting, since before the first fold was made?</p>
+
+  <p class="b">Entropy increases in the spatial dimensions, yes. Stars burn out. Galaxies disperse. But entropy as conventionally measured only counts the degrees of freedom accessible in 3+1D spacetime. If the fold pattern is expanding into additional degrees of freedom with each phase transition, then what looks like increasing disorder from within our dimensions could be increasing order in the sheet's full configuration space. The second law isn't wrong. It's incomplete. It tracks a subset of the full geometry. And the fold pattern is gaining access to new degrees of freedom faster than it's losing structure in the old ones. The universe isn't winding down. It's bootstrapping itself upward, phase transition by phase transition, each one opening more room than the last.</p>
+
+  <p class="b">We don't flatten out. We fold up.</p>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--           CLOSING BAND                 -->
+<!-- ═══════════════════════════════════════ -->
+<section>
+  <div class="band">
+    <p>The universe is not a machine.<br>It is not a computation.<br>It is a fold.</p>
+    <p>And we are the part of the fold<br>that is learning to fold upward.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--           CLOSING NOTE                 -->
+<!-- ═══════════════════════════════════════ -->
+<section class="fi">
+  <p class="label">A Note</p>
+  <h2>What this is, and what it isn't.</h2>
+
+  <p class="b">This is a framework, not a finished theory. It needs mathematical formalization. It needs testable predictions. It needs people better at math than me to determine whether the constraint structure of flat-foldability can reproduce the Standard Model of particle physics, whether origami constraints select a unique compactification geometry, and whether the fold's configuration space has the right structure to generate the coupling constants and particle masses we observe.</p>
+
+  <p class="b">But it has internal coherence. Every piece fits with every other piece, not because they were forced, but because they turn out to be different views of the same thing. It has contact with established physics at every point: general relativity, Regge Calculus, holography, the AdS/CFT correspondence, ER = EPR, amplituhedra, anomaly cancellation, decoherence, integrated information theory, criticality, the renormalization group, cosmological natural selection, and potentially the mathematical structure of string theory itself. The cosmic web's filament-node-void structure maps onto crease-vertex-face topology. Protein folding demonstrates the framework's core operation at molecular scale, and AI solving the protein folding problem demonstrates its recursive structure. Matter-antimatter annihilation maps onto mountain-valley fold cancellation, and the origami math reproduces the Sakharov conditions for baryogenesis — Maekawa's local asymmetry plus the Big Bang's departure from equilibrium. The same local asymmetry may predict biological chirality. Even quantum tunneling becomes intuitive: particles slipping between layers of the fold that are already touching. These aren't fringe ideas. They're the cutting edge of theoretical physics, biology, and computation. The fold framework shows how they connect.</p>
+
+  <p class="b">It also came to me on a psychedelic trip. Which either makes you trust it more or trust it less. But the framework stands independent of its origin. The physics either checks out or it doesn't.</p>
+
+  <p class="b">So far, it checks out.</p>
+</section>
+
+<footer>The Fold &middot; 2026</footer>
+
+<noscript><style>.fi{opacity:1!important;transform:none!important;}</style></noscript>
+<script>
+try {
+  const o = new IntersectionObserver(es => {
+    es.forEach(e => { if(e.isIntersecting) e.target.classList.add('v'); });
+  }, { threshold:.08, rootMargin:'0px 0px -30px 0px' });
+  document.querySelectorAll('.fi').forEach(el => o.observe(el));
+} catch(e) {
+  document.querySelectorAll('.fi').forEach(el => el.classList.add('no-anim'));
+}
+setTimeout(() => {
+  document.querySelectorAll('.fi:not(.v)').forEach(el => el.classList.add('v'));
+}, 2000);
+</script>
+</body>
+</html>
