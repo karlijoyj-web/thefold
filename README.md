@@ -23,11 +23,13 @@ It follows a recurring grammar across biology, mind, technical systems, altered 
 - **Synchronization through capture** — coordination that can enlarge or narrow
 - **Thermodynamic cost** — active insides pay for coherence
 - **Nested insidehood** — the grammar repeats across scales, from cells to civilizations
+- **Altered states** — psychedelics, trauma, and healing as windows into how closure is organized
 - **Freedom** — the capacity to regulate coupling without loss of self
 
 ## What's here
 
-`index.html` — the full illustrated framework as a single standalone HTML file, designed for reading. 
+`index.html` — the full framework as a single standalone HTML file, designed for reading. Responsive, no dependencies.
+
 ## Reading it
 
 Open `index.html` in a browser, or visit the [live page](https://karlijoyj-web.github.io/thefold/) if GitHub Pages is enabled.
@@ -36,4 +38,4 @@ Open `index.html` in a browser, or visit the [live page](https://karlijoyj-web.g
 
 This work is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
-© 2026 Karli
+© 2026 Karli Joy 
