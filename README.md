@@ -36,6 +36,6 @@ Open `index.html` in a browser, or visit the [live page](https://karlijoyj-web.g
 
 ## License
 
-This work is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-© 2026 Karli Joy 
+© 2026 Karli
