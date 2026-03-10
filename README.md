@@ -27,8 +27,7 @@ It follows a recurring grammar across biology, mind, technical systems, altered 
 
 ## What's here
 
-`index.html` — the full illustrated framework as a single standalone HTML file, designed for reading. Responsive, no dependencies, hand-drawn SVG illustrations with subtle animations.
-
+`index.html` — the full illustrated framework as a single standalone HTML file, designed for reading. 
 ## Reading it
 
 Open `index.html` in a browser, or visit the [live page](https://karlijoyj-web.github.io/thefold/) if GitHub Pages is enabled.
