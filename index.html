@@ -19,7 +19,7 @@
     --color-rule-light: #e8e2d6;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'Source Serif 4', Georgia, serif;
-    --max-width: 680px;
+    --max-width: clamp(320px, 55vw, 1100px);
   }
 
   *, *::before, *::after {
@@ -48,7 +48,7 @@
   header {
     text-align: center;
     padding: 6rem 2rem 4rem;
-    max-width: 800px;
+    max-width: clamp(320px, 60vw, 1200px);
     margin: 0 auto;
   }
 
@@ -84,7 +84,7 @@
   main {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 2rem 6rem;
+    padding: 0 2.5rem 6rem;
   }
 
   /* ── Sections ── */
@@ -233,12 +233,16 @@
   }
 
   /* ── Responsive ── */
+  @media (min-width: 1600px) {
+    html { font-size: 20px; }
+  }
+
   @media (max-width: 768px) {
     html { font-size: 16px; }
-    header { padding: 4rem 1.5rem 3rem; }
+    header { padding: 4rem 1.5rem 3rem; max-width: 100%; }
     header h1 { font-size: 3rem; }
     header .subtitle { font-size: 1.15rem; }
-    main { padding: 0 1.5rem 4rem; }
+    main { max-width: 100%; padding: 0 1.5rem 4rem; }
     h2 { font-size: 1.7rem; }
     .principle { font-size: 1.05rem; padding-left: 1.2rem; }
   }
@@ -701,7 +705,7 @@
 
 <p>Bipolar states matter here too. In this framework, they can be read as altered amplitude, pacing, permeability, and coupling. Manic or hypomanic states can widen association, accelerate cadence, loosen filtering, and produce a feeling of enlarged possibility, while also increasing the risk of unstable capture and loss of regulation. Depressive phases pull in the opposite direction. The point is not to reduce a diagnosis to one mechanism, but to show that different states alter pulse, closure, and temporal organization in different ways.</p>
 
-<h3>Psychedelics, cannabis, meditation, salvia</h3>
+<h3>Psychedelics, cannabis, meditation, salvia, DMT</h3>
 
 <p>Psychedelics were part of the original pressure that made this framework visible at all, because they make one thing unmistakable:</p>
 
@@ -727,11 +731,13 @@
 
 <p>Meditative states provide another important contrast. Some forms of meditation soften ordinary self-reference, widen awareness, and alter felt time without the same destabilizing force that psychedelics can produce. That makes meditation especially useful here: closure can be widened or quieted without necessarily being shattered.</p>
 
-<p>Salvia matters because it shows something different again. It often does not feel like simple openness, expansion, or softened boundary. It can feel more like abrupt displacement: ownership reassigned, perspective shoved sideways, ordinary world-binding replaced, the local self no longer merely loosened but deposed. People describe being flattened into surfaces, redistributed into structures, pulled into mechanical or environmental grammars, or reassigned into another organizing rule-set altogether.</p>
+<p>Salvia matters because it shows something different again. It often does not feel like simple openness, expansion, or softened boundary. It can feel more like abrupt displacement: ownership reassigned, perspective shoved sideways, ordinary world-binding replaced, the local self no longer merely loosened but deposed. People describe being flattened into surfaces, redistributed into structures, pulled into mechanical or environmental grammars, or reassigned into another organizing rule-set altogether. Some report becoming inanimate objects, feeling themselves as a hinge, a page, a repeating tile — not metaphorically, but as the felt texture of experience when owned interiority collapses toward a flatter, more mechanical, repetitive mode.</p>
 
 <p>In the language of the framework, salvia is not just loosened closure. It is closer to a violent interruption of owned interiority. Appearing does not vanish, but the ordinary sense that experience is privately centered in the usual bounded self can collapse or be reassigned. That matters because it shows that selfhood is not just boundary-strength. It depends on stable ownership, stable perspective-binding, stable temporal stitching, and stable world-coupling. Salvia makes those dependencies visible by breaking them.</p>
 
-<p>These states matter because they show, directly and experientially, that the ordinary inside is not a given. It is a maintained structure. Selfhood is organized. Time is organized. Boundary is organized. And when those conditions shift, the whole feel of reality shifts with them.</p>
+<p>DMT-like states may add another variation again: not just altered boundary or displaced ownership, but the sudden appearance of highly organized apparent others. These figures often seem less like vague presences than like agentive forms — showing, building, communicating, or arranging space around the experiencer. In the language of the framework, this raises a deeper question: whether altered closure can generate unusually strong person-like structuring, agentive salience, or relational over-articulation within experience. It may be that something genuinely other is being encountered, that human agency-detection is being recruited by unusually complex structure, or that the mind is meeting a deeper layer of its own organization and finding it stranger and more alive than expected. Part of what makes these states so powerful is that they often feel less like discovery than recognition.</p>
+
+<p>These states matter because they show, directly and experientially, that the ordinary inside is not a given. It is a maintained structure. Selfhood is organized. Time is organized. Boundary is organized. And when those conditions shift, the whole feel of reality shifts with them. In this sense, altered states act as a kind of tomography: they reveal hidden structure by deforming ordinary constraints, making visible what usually holds without being noticed.</p>
 
 <h3>Healing</h3>
 
