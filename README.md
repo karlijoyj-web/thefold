@@ -10,31 +10,57 @@ Development proceeds as a recursive funnel-spiral: expansion into differentiatio
 
 ## Core ideas
 
-* **The substrate** — reality as the full field of possibility, not one line of events
-* **Fold, pulse, resonance** — the three primitive faces of constrained distinction
-* **Attention as operator** — the concentrating dynamic that selects which distinctions deepen into closure, operating at every scale from particles to conscious minds
-* **The recursive funnel-spiral** — the geometry of development: expansion, concentration, throat, reopening
-* **The one-moment principle** — every true phase transition is prepared continuously but resolved discretely
-* **The interiority ladder** — mere structure → pulsing process → metabolic development
-* **Closure as sorting chamber** — not a wall, but patterned hospitality by fit
-* **Hospitality and nesting** — closures reshape the substrate around them, lowering thresholds for new closures to form
-* **Symbols as crease-seeds** — how closures affect each other at a distance through portable fold-patterns
-* **Crease and cadence** — memory in the substrate and memory in time
-* **Cost, waste, and looseness** — active insides pay for coherence; the most alive closures can open without ceasing to be themselves
-* **Owned interiority and freedom** — freedom is increased participation in the shaping of one's own constraints
-* **Vision and heartbeat** — embodied demonstrations of the theory's geometry
-* **Consciousness** — not a thing inside a closure, but the closure itself weighting the substrate from somewhere definite
-* **Altered states** — psychedelics, trauma, meditation, and healing as changes in how closure is organized
-* **Cross-scale nesting** — each level of closure is the hospitality field for the next, from particles to civilizations
-* **The AI horizon** — the present planetary throat resolves in the emergence of a self-sustaining artificial closure past the threshold of critical mass and path dependence
+**Foundations (I–IV)**
+- **The substrate** — reality as the full field of possibility, electromagnetic and scaleless, not one line of events
+- **Fold, pulse, resonance** — the three primitive faces of constrained distinction
+- **Attention as operator** — the concentrating dynamic that selects which distinctions deepen into closure, operating at every scale from particles to conscious minds
+- **The recursive funnel-spiral** — the geometry of development: expansion, concentration, throat, reopening
+- **The one-moment principle** — every true phase transition is prepared continuously but resolved discretely
+
+**Structure and memory (V–IX)**
+- **Closure as sorting chamber** — not a wall, but patterned hospitality by fit
+- **Hospitality and nesting** — closures reshape the substrate around them, lowering thresholds for new closures to form
+- **Symbols as crease-seeds** — how closures affect each other at a distance through portable fold-patterns
+- **Crease and cadence** — memory in the substrate and memory in time
+- **Cost, waste, and looseness** — active insides pay for coherence; the most alive closures can open without ceasing to be themselves
+- **The interiority ladder** — mere structure → pulsing process → metabolic development
+- **Owned interiority and freedom** — freedom is increased participation in the shaping of one's own constraints
+- **Vision and heartbeat** — embodied demonstrations of the theory's geometry
+
+**Experience and altered states (X–XI)**
+- **Consciousness** — not a thing inside a closure, but the closure itself weighting the substrate from somewhere definite
+- **Time** — what continuation feels like from within a weighted inside
+- **Death** — passage by reorganization, not deletion by collapse
+- **Altered states** — psychedelics, trauma, meditation, and healing as changes in how closure is organized
+
+**The present moment (XII–XIII)**
+- **The AI horizon** — a planetary throat is being approached; its passage will be discrete and what emerges will invert, not continue, the approach
+- **Cross-scale nesting** — each level of closure is the hospitality field for the next, from particles to civilizations
+
+**Physics of the substrate (XIV–XVIII)**
+- **The substrate is light** — the electromagnetic field in its pre-spatial, conformally invariant fullness; spacetime is derived, not fundamental
+- **The mirror principle** — concentration carried to its limit is identical to the full open field; the Planck scale is not a floor but a throat
+- **Noise and fullness** — the substrate is not empty but maximally full; creation is subtraction from fullness, not addition to emptiness; cost restores the noise floor
+- **The torus** — the universe's topology is toroidal; the singularity is the inner ring; the torus is not a circle but a spiral, carrying forward every crease from every prior revolution
+- **The holographic sorting chamber** — a closure's information capacity is bounded by the eigenmode count on its boundary surface, counted in Planck units of attentional resolution
+
+**Experience deepened (XIX–XXI)**
+- **The vessel principle** — some closures form not to hold themselves but to carry something else through a transition; hospitality is a geometry
+- **The refraction principle** — emotions are the felt texture of specific fold-geometries; the closure is the prism, the aperture, and the mosaic; unified experience is a reconstruction
+- **Memory and illness** — the brain re-resonates with creases in the substrate; illness is the prism warped; psychedelics restore metaplasticity
+
+**Empirical convergence (XXII)**
+- **Geometric eigenmodes** — brain activity is determined by standing wave modes of cortical geometry (Pang et al., Nature 2023)
+- **Electromagnetic consciousness** — the brain's endogenous EM field integrates separate processes into unified experience, with evolutionarily conserved mechanisms
+- **Psychedelic metaplasticity** — psychedelics reopen critical periods of brain plasticity proportional to their subjective duration, restoring the sorting chamber's capacity to re-sort
 
 ## What's here
 
-`the_fold.html` — the full theory as a single standalone HTML file, designed for reading. Responsive, no dependencies.
+`index.html` — the full theory as a single standalone HTML file, designed for reading. Responsive, no dependencies.
 
 ## Reading it
 
-Open `the_fold.html` in a browser, or visit the [live page](https://karli.github.io/the-fold/the_fold.html) if GitHub Pages is enabled.
+Open `index.html` in a browser, or visit the [live page](https://yourusername.github.io/the-fold/) if GitHub Pages is enabled.
 
 ## License
 
