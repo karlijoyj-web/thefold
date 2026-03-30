@@ -60,7 +60,7 @@ Development proceeds as a recursive funnel-spiral: expansion into differentiatio
 
 ## Reading it
 
-Open `index.html` in a browser, or visit the [live page](https://karlijoyj.github.io/the-fold/) if GitHub Pages is enabled.
+Open `index.html` in a browser, or visit the [live page](https://karlijoyj-web.github.io/thefold/)) if GitHub Pages is enabled.
 
 ## License
 
